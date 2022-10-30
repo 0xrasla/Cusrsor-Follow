@@ -10,6 +10,7 @@
         body {
             background-color: black;
             color: white;
+            overflow: hidden;
         }
 
         #cursor {
@@ -24,6 +25,33 @@
             background-repeat: no-repeat;
             background-position: center;
             pointer-events: none;
+            z-index: 999;
+        }
+
+        .eyes {
+            background-color: wheat;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .eye {
+            background-color: rgb(198, 24, 24);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .eyelid {
+            background-color: rgb(240, 230, 230);
+            width: 20px;
+            height: 20px;
         }
     </style>
 
@@ -31,6 +59,15 @@
 
 <body>
     <div id="cursor"></div>
+    <div class="eyes">
+        <div class="eye left-eye">
+            <div class="eyelid"></div>
+        </div>
+        <div class="eye right-eye">
+            <div class="eyelid"></div>
+
+        </div>
+    </div>
     <script>
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', (e) => {
@@ -46,6 +83,22 @@
                 duration: 800,
                 fill: 'forwards'
             });
+        })
+
+        const eye = document.querySelectorAll('.eye');
+
+        Array.from(eye).forEach((e) => {
+            const left_eye = document.querySelector('.left-eye');
+            const right_eye = document.querySelector('.right-eye');
+            document.body.addEventListener('mousemove', (event) => {
+
+                const mousex = event.pageX - left_eye.offsetLeft, //left_eye.offsetLeft
+                    mousey = event.pageY - left_eye.offsetTop; //left_eye.offsetTop
+
+                left_eye.style.transform = `translate(${mousex / 20}px, ${mousey / 20}px)`;
+                right_eye.style.transform = `translate(${mousex / 20}px, ${mousey / 20}px)`;
+
+            })
         })
     </script>
 </body>
